@@ -1,38 +1,5 @@
 <?php
 
-$text['title-time_conditions']['en-us'] = "Time Conditions";
-$text['title-time_conditions']['es-cl'] = "Condiciones de Tiempo";
-$text['title-time_conditions']['pt-pt'] = "Condições Temporais";
-$text['title-time_conditions']['fr-fr'] = "Conditions Temporelles";
-$text['title-time_conditions']['pt-br'] = "Condições temporárias";
-$text['title-time_conditions']['pl'] = "Warunki czasowe";
-$text['title-time_conditions']['uk'] = "Часові умови";
-$text['title-time_conditions']['sv-se'] = "Tids Förhållande";
-$text['title-time_conditions']['de-at'] = "Zeitvorgaben";
-$text['title-time_conditions']['he'] = "תלוי זמן";
-
-$text['title-outbound_routes']['en-us'] = "Outbound Routes";
-$text['title-outbound_routes']['es-cl'] = "Rutas Salientes";
-$text['title-outbound_routes']['pt-pt'] = "Rotas de Saídas";
-$text['title-outbound_routes']['fr-fr'] = "Routes Sortantes";
-$text['title-outbound_routes']['pt-br'] = "Rotas de saída";
-$text['title-outbound_routes']['pl'] = "Trasy wychodzące";
-$text['title-outbound_routes']['uk'] = "Маршрути вихідних дзвінків";
-$text['title-outbound_routes']['sv-se'] = "Utgående Router";
-$text['title-outbound_routes']['de-at'] = "Ausgehende Routen";
-$text['title-outbound_routes']['he'] = "";
-
-$text['title-inbound_routes']['en-us'] = "Inbound Routes";
-$text['title-inbound_routes']['es-cl'] = "Rutas Entrantes";
-$text['title-inbound_routes']['pt-pt'] = "Rotas de Entrada";
-$text['title-inbound_routes']['fr-fr'] = "Routes Entrantes";
-$text['title-inbound_routes']['pt-br'] = "Rotas de entrada";
-$text['title-inbound_routes']['pl'] = "Trasy przychodzące";
-$text['title-inbound_routes']['uk'] = "Маршрути вхідних дзвінків";
-$text['title-inbound_routes']['sv-se'] = "Inkommande Router";
-$text['title-inbound_routes']['de-at'] = "Eingehende Routen";
-$text['title-inbound_routes']['he'] = "";
-
 $text['title-dialplan_manager']['en-us'] = "Dialplan Manager";
 $text['title-dialplan_manager']['es-cl'] = "Administrador de Plan de Marcado";
 $text['title-dialplan_manager']['pt-pt'] = "Gestor de Dialplans";
@@ -87,6 +54,79 @@ $text['title-default_dialplan']['uk'] = "Маршрутизація за зам�
 $text['title-default_dialplan']['sv-se'] = "Standard Nummerplan";
 $text['title-default_dialplan']['de-at'] = "Standard Wählplan";
 $text['title-default_dialplan']['he'] = "";
+
+$text['title-time_conditions']['en-us'] = "Time Conditions";
+$text['title-time_conditions']['es-cl'] = "Condiciones de Tiempo";
+$text['title-time_conditions']['pt-pt'] = "Condições Temporais";
+$text['title-time_conditions']['fr-fr'] = "Conditions Temporelles";
+$text['title-time_conditions']['pt-br'] = "Condições temporárias";
+$text['title-time_conditions']['pl'] = "Warunki czasowe";
+$text['title-time_conditions']['uk'] = "Часові умови";
+$text['title-time_conditions']['sv-se'] = "Tids Förhållande";
+$text['title-time_conditions']['de-at'] = "Zeitvorgaben";
+$text['title-time_conditions']['he'] = "תלוי זמן";
+
+$text['title-outbound_routes']['en-us'] = "Outbound Routes";
+$text['title-outbound_routes']['es-cl'] = "Rutas Salientes";
+$text['title-outbound_routes']['pt-pt'] = "Rotas de Saídas";
+$text['title-outbound_routes']['fr-fr'] = "Routes Sortantes";
+$text['title-outbound_routes']['pt-br'] = "Rotas de saída";
+$text['title-outbound_routes']['pl'] = "Trasy wychodzące";
+$text['title-outbound_routes']['uk'] = "Маршрути вихідних дзвінків";
+$text['title-outbound_routes']['sv-se'] = "Utgående Router";
+$text['title-outbound_routes']['de-at'] = "Ausgehende Routen";
+$text['title-outbound_routes']['he'] = "";
+
+$text['title-inbound_routes']['en-us'] = "Inbound Routes";
+$text['title-inbound_routes']['es-cl'] = "Rutas Entrantes";
+$text['title-inbound_routes']['pt-pt'] = "Rotas de Entrada";
+$text['title-inbound_routes']['fr-fr'] = "Routes Entrantes";
+$text['title-inbound_routes']['pt-br'] = "Rotas de entrada";
+$text['title-inbound_routes']['pl'] = "Trasy przychodzące";
+$text['title-inbound_routes']['uk'] = "Маршрути вхідних дзвінків";
+$text['title-inbound_routes']['sv-se'] = "Inkommande Router";
+$text['title-inbound_routes']['de-at'] = "Eingehende Routen";
+$text['title-inbound_routes']['he'] = "";
+
+$text['title-other']['en-us'] = "Other";
+$text['title-other']['es-cl'] = "Otro";
+$text['title-other']['pt-pt'] = "De outros";
+$text['title-other']['fr-fr'] = "Autre";
+$text['title-other']['pt-br'] = "De outros";
+$text['title-other']['pl'] = "Inny";
+$text['title-other']['sv-se'] = "Annat";
+$text['title-other']['uk'] = "Інший";
+$text['title-other']['de-at'] = "Hochladen";
+
+$text['option-check_voicemail']['en-us'] = "Check Voicemail";
+$text['option-check_voicemail']['es-cl'] = "Compruebe el correo de voz";
+$text['option-check_voicemail']['pt-pt'] = "Verifique Voicemail";
+$text['option-check_voicemail']['fr-fr'] = "Vérifiez la messagerie vocale";
+$text['option-check_voicemail']['pt-br'] = "Verifique Voicemail";
+$text['option-check_voicemail']['pl'] = "Sprawdź pocztę głosową";
+$text['option-check_voicemail']['sv-se'] = "Kontrollera röstbrevlådan";
+$text['option-check_voicemail']['uk'] = "Перевірте голосову пошту";
+$text['option-check_voicemail']['de-at'] = "überprüfen Sie Voicemail";
+
+$text['option-company_directory']['en-us'] = "Company Directory";
+$text['option-company_directory']['es-cl'] = "Directorio de la empresa";
+$text['option-company_directory']['pt-pt'] = "Directório de Empresas";
+$text['option-company_directory']['fr-fr'] = "Annuaire de l'entreprise";
+$text['option-company_directory']['pt-br'] = "Directório de Empresas";
+$text['option-company_directory']['pl'] = "katalog Firm";
+$text['option-company_directory']['sv-se'] = "Företagskatalog";
+$text['option-company_directory']['uk'] = "Каталог компаній";
+$text['option-company_directory']['de-at'] = "Firmenverzeichnis";
+
+$text['option-record']['en-us'] = "Record";
+$text['option-record']['es-cl'] = "Registro";
+$text['option-record']['pt-pt'] = "Registro";
+$text['option-record']['fr-fr'] = "Enregistrement";
+$text['option-record']['pt-br'] = "Registro";
+$text['option-record']['pl'] = "Rekord";
+$text['option-record']['sv-se'] = "Spela";
+$text['option-record']['uk'] = "Запис";
+$text['option-record']['de-at'] = "Aufzeichnung";
 
 $text['select-global']['en-us'] = "Global";
 $text['select-global']['es-cl'] = "Global";

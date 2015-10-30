@@ -25,7 +25,7 @@
 		$apps[$x]['destinations'][$y]['type'] = "sql";
 		$apps[$x]['destinations'][$y]['label'] = "fax";
 		$apps[$x]['destinations'][$y]['name'] = "fax";
-		$apps[$x]['destinations'][$y]['where'] = "where domain_uuid = '${domain_uuid}' ";
+		$apps[$x]['destinations'][$y]['where'] = "where domain_uuid = '\${domain_uuid}' ";
 		$apps[$x]['destinations'][$y]['order_by'] = "fax_extension asc";
 		$apps[$x]['destinations'][$y]['field']['name'] = "fax_name";
 		$apps[$x]['destinations'][$y]['field']['destination'] = "fax_extension";
@@ -256,10 +256,6 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "Authorized email-to-fax sender addresses.";
 		$z++;
-		$apps[$x]['db'][$y]['fields'][$z]['name'] = "fax_local";
-		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
-		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
-		$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name'] = "fax_pin_number";
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
@@ -281,6 +277,11 @@
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
 		$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
 		$z++;
+		//$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "fax_keep_local";
+		//$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = "fax_local";
+		//$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";
+		//$apps[$x]['db'][$y]['fields'][$z]['description']['en-us'] = "";
+		//$z++;
 		$apps[$x]['db'][$y]['fields'][$z]['name']['text'] = "fax_description";
 		$apps[$x]['db'][$y]['fields'][$z]['name']['deprecated'] = "faxdescription";
 		$apps[$x]['db'][$y]['fields'][$z]['type'] = "text";

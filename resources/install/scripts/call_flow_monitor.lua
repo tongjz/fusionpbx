@@ -25,23 +25,21 @@
 --	POSSIBILITY OF SUCH DAMAGE.
 
 --set the time between loops in seconds
-	sleep = 300;
+	sleep = 60;
 
 --set the debug level
 	debug["log"] = false;
 	debug["sql"] = false;
 
 --include config.lua
-	scripts_dir = string.sub(debug.getinfo(1).source,2,string.len(debug.getinfo(1).source)-(string.len(argv[0])+1));
-	dofile(scripts_dir.."/resources/functions/config.lua");
-	dofile(config());
+	require "resources.functions.config";
 
 --general functions
-	dofile(scripts_dir.."/resources/functions/file_exists.lua");
-	dofile(scripts_dir.."/resources/functions/mkdir.lua");
+	require "resources.functions.file_exists";
+	require "resources.functions.mkdir";
 
 --connect to the database
-	dofile(scripts_dir.."/resources/functions/database_handle.lua");
+	require "resources.functions.database_handle";
 	dbh = database_handle('system');
 
 --make sure the scripts/run dir exists

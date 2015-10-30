@@ -217,6 +217,7 @@ require_once "resources/require.php";
 
 				//array cleanup
 					$x = 0;
+					//unset($_POST["autocomplete"]);
 					foreach ($_POST["device_lines"] as $row) {
 						//unset the empty row
 							if (strlen($row["line_number"]) == 0) {
@@ -502,6 +503,7 @@ require_once "resources/require.php";
 <?php
 //show the content
 	echo "<form method='post' name='frm' id='frm' action='' onsubmit='check_duplicates(); return false;'>\n";
+	//echo "<input style='display:none;' type='password' name='autocomplete'>";
 	echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 	echo "<tr>\n";
 	echo "<td align='left' width='30%' nowrap='nowrap' valign='top'>";
@@ -553,32 +555,35 @@ require_once "resources/require.php";
 	echo "<select id='device_template' name='device_template' class='formfld'>\n";
 	echo "<option value=''></option>\n";
 
-	if ($dh = opendir($template_dir)) {
-		while($dir = readdir($dh)) {
-			if($file != "." && $dir != ".." && $dir[0] != '.') {
-				if(is_dir($template_dir . "/" . $dir)) {
-					echo "<optgroup label='$dir'>";
-					if($dh_sub = opendir($template_dir.'/'.$dir)) {
-						while($dir_sub = readdir($dh_sub)) {
-							if($file_sub != '.' && $dir_sub != '..' && $dir_sub[0] != '.') {
-								if(is_dir($template_dir . '/' . $dir .'/'. $dir_sub)) {
-									if ($device_template == $dir."/".$dir_sub) {
-										echo "<option value='".$dir."/".$dir_sub."' selected='selected'>".$dir."/".$dir_sub."</option>\n";
-									}
-									else {
-										echo "<option value='".$dir."/".$dir_sub."'>".$dir."/".$dir_sub."</option>\n";
+	if (is_dir($template_dir)) {
+			$templates = scandir($template_dir);
+			foreach($templates as $dir) {
+				if($file != "." && $dir != ".." && $dir[0] != '.') {
+					if(is_dir($template_dir . "/" . $dir)) {
+						echo "<optgroup label='$dir'>";
+						$dh_sub=$template_dir . "/" . $dir;
+						if(is_dir($dh_sub)) {
+							$templates_sub = scandir($dh_sub);
+							foreach($templates_sub as $dir_sub) {
+								if($file_sub != '.' && $dir_sub != '..' && $dir_sub[0] != '.') {
+									if(is_dir($template_dir . '/' . $dir .'/'. $dir_sub)) {
+										if ($device_template == $dir."/".$dir_sub) {
+											echo "<option value='".$dir."/".$dir_sub."' selected='selected'>".$dir."/".$dir_sub."</option>\n";
+										}
+										else {
+											echo "<option value='".$dir."/".$dir_sub."'>".$dir."/".$dir_sub."</option>\n";
+										}
 									}
 								}
 							}
+							closedir($dh_sub);
 						}
-						closedir($dh_sub);
+						echo "</optgroup>";
 					}
-					echo "</optgroup>";
 				}
 			}
+			closedir($dh);
 		}
-		closedir($dh);
-	}
 	echo "</select>\n";
 	echo "<br />\n";
 	echo $text['description-device_template']."\n";
@@ -664,7 +669,7 @@ require_once "resources/require.php";
 
 			if (permission_exists('device_line_password')) {
 				echo "			<td align='left'>\n";
-				echo "				<input class='formfld' style='width: 90px;' type='password' name='device_lines[".$x."][password]' onmouseover=\"this.type='text';\" onfocus=\"this.type='text';\" onmouseout=\"if (!$(this).is(':focus')) { this.type='password'; }\" onblur=\"this.type='password';\" maxlength='255' value=\"".$row['password']."\">\n";
+				echo "				<input class='formfld' style='width: 90px;' type='password' name='device_lines[".$x."][password]' onmouseover=\"this.type='text';\" onfocus=\"this.type='text';\" onmouseout=\"if (!$(this).is(':focus')) { this.type='password'; }\" onblur=\"this.type='password';\" autocomplete=\"off\" maxlength='255' value=\"".$row['password']."\">\n";
 				echo "			</td>\n";
 			}
 
@@ -882,14 +887,19 @@ require_once "resources/require.php";
 					?>
 					<option value='blf' <?php if ($row['device_key_type'] == "blf") { echo $selected;$found=true; } ?>><?php echo $text['label-blf'] ?></option>
 					<option value='blfxfer' <?php if ($row['device_key_type'] == "blfxfer") { echo $selected;$found=true; } ?>><?php echo $text['label-blf_xfer'] ?></option>
+					<option value='callers' <?php if ($row['device_key_type'] == "callers") { echo $selected;$found=true; } ?>><?php echo $text['label-callers'] ?></option>
+
 					<option value='dnd' <?php if ($row['device_key_type'] == "dnd") { echo $selected;$found=true; } ?>><?php echo $text['label-dnd'] ?></option>
 					<option value='speeddial' <?php if ($row['device_key_type'] == "speeddial") { echo $selected;$found=true; } ?>><?php echo $text['label-speed_dial'] ?></option>
+					<option value='xfer' <?php if ($row['device_key_type'] == "xfer") { echo $selected;$found=true; } ?>><?php echo $text['label-xfer'] ?></option>
+
 					<?php
 					if (strlen($device_vendor) == 0) { echo "</optgroup>"; }
 				}
 				if (strtolower($device_vendor) == "cisco" || strlen($device_vendor) == 0 || strlen($device_username) > 0) {
 					echo "<optgroup label='Cisco'>";
 					?>
+					<option value='blf' <?php if ($row['device_key_type'] == "blf") { echo $selected;$found=true; } ?>><?php echo $text['label-blf'] ?></option>
 					<option value='line' <?php if ($row['device_key_type'] == "line") { echo $selected;$found=true; } ?>><?php echo $text['label-line'] ?></option>
 					<option value='disabled' <?php if ($row['device_key_type'] == "disabled") { echo $selected;$found=true; } ?>><?php echo $text['label-disabled'] ?></option>
 					<?php
@@ -1148,8 +1158,8 @@ require_once "resources/require.php";
 	echo "	".$text['label-device']."\n";
 	echo "</td>\n";
 	echo "<td class='vtable' align='left'>\n";
-	echo "	<input class='formfld' type='text' name='device_username' id='device_username' maxlength='255' placeholder=\"".$text['label-device_username']."\" value=\"$device_username\">\n";
-	echo "	<input class='formfld' type='text' name='device_password' id='device_password' onfocus=\"this.type='text';\" onmouseout=\"if (!$(this).is(':focus')) { this.type='password'; }\" onblur=\"this.type='password';\" maxlength='255' placeholder=\"".$text['label-device_password']."\" value=\"$device_password\">\n";
+	echo "	<input class='formfld' type='text' name='device_username' id='device_username' autocomplete=\"off\" maxlength='255' placeholder=\"".$text['label-device_username']."\" value=\"$device_username\">\n";
+	echo "	<input class='formfld' type='text' name='device_password' id='device_password' autocomplete=\"off\" onfocus=\"this.type='text';\" onmouseout=\"if (!$(this).is(':focus')) { this.type='password'; }\" onblur=\"this.type='password';\" maxlength='255' placeholder=\"".$text['label-device_password']."\" value=\"$device_password\">\n";
 	echo "	<div style='display: none;' id='duplicate_username_response'></div>\n";
 	echo "<br />\n";
 	echo $text['description-device']."\n";

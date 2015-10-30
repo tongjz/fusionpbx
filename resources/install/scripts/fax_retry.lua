@@ -31,33 +31,17 @@
 	api = freeswitch.API();
 
 --include config.lua
-	scripts_dir = string.sub(debug.getinfo(1).source,2,string.len(debug.getinfo(1).source)-(string.len(argv[0])+1));
-	dofile(scripts_dir.."/resources/functions/config.lua");
-	dofile(config());
+	require "resources.functions.config";
 
 --connect to the database
-	dofile(scripts_dir.."/resources/functions/database_handle.lua");
+	require "resources.functions.database_handle";
 	dbh = database_handle('system');
 
 --define the explode function
-	function explode ( seperator, str ) 
-		local pos, arr = 0, {}
-		for st, sp in function() return string.find( str, seperator, pos, true ) end do -- for each divider found
-			table.insert( arr, string.sub( str, pos, st-1 ) ) -- attach chars left of current divider
-			pos = sp + 1 -- jump past current divider
-		end
-		table.insert( arr, string.sub( str, pos ) ) -- attach chars right of last divider
-		return arr
-	end
+	require "resources.functions.explode";
 
 --array count
-	function count(t)
-		c = 0;
-		for k,v in pairs(t) do
-  			c = c+1;
-		end
-		return c;
-	end
+	require "resources.functions.count";
 
 -- show all channel variables
 	--dat = env:serialize()
@@ -141,7 +125,7 @@
 	end
 
 --settings
-	dofile(scripts_dir.."/resources/functions/settings.lua");
+	require "resources.functions.settings";
 	settings = settings(domain_uuid);
 	storage_type = "";
 	storage_path = "";
@@ -295,16 +279,22 @@
 	end
 	--needs to be fixed on operating systems that do not have sed or echo utilities.
 	number_dialed = api:execute("system", "/bin/echo -n "..fax_uri.." | sed -e s,.*/,,g");
-	--do not use apostrophies in message, they are not excaped and the mail will fail.
+	--do not use apostrophies in message, they are not escaped and the mail will fail.
 	email_message_fail = "We are sorry the fax failed to go through.  It has been attached. Please check the number "..number_dialed..", and if it was correct you might consider emailing it instead."
 	email_message_success = "We are happy to report the fax was sent successfully.  It has been attached for your records."
 
 --add the fax files
 	if (fax_success ~= nil) then
 		if (fax_success =="1") then
+			if (settings['fax']['keep_local']['boolean'] ~= "nil") then
+				if (settings['fax']['keep_local']['boolean'] == "false") then
+					storage_type = "";
+				end
+			end
+
 			if (storage_type == "base64") then
 				--include the base64 function
-					dofile(scripts_dir.."/resources/functions/base64.lua");
+					require "resources.functions.base64";
 
 				--base64 encode the file
 					local f = io.open(fax_file, "rb");
@@ -401,7 +391,7 @@
 		--email_cmd = "/bin/echo '"..email_message_fail.."' | /usr/bin/mail -s 'Fax to: "..number_dialed.." FAILED' -r "..from_address.." -a '"..fax_file.."' "..email_address;
 
 		--to keep the originate command shorter these are things we always send. One place to adjust for all.
-		originate_same = "for_fax=1,absolute_codec_string='PCMU,PCMA',accountcode='"..accountcode.."',domain_uuid="..domain_uuid..",domain_name="..domain_name..",mailto_address='"..email_address.."',mailfrom_address='"..from_address.."',origination_caller_id_name='"..origination_caller_id_name.. "',origination_caller_id_number="..origination_caller_id_number..",fax_uri="..fax_uri..",fax_retry_limit="..fax_retry_limit..",fax_retry_sleep="..fax_retry_sleep..",fax_verbose=true,fax_file='"..fax_file.."'";
+		originate_same = "for_fax=1,accountcode='"..accountcode.."',domain_uuid="..domain_uuid..",domain_name="..domain_name..",mailto_address='"..email_address.."',mailfrom_address='"..from_address.."',origination_caller_id_name='"..origination_caller_id_name.. "',origination_caller_id_number="..origination_caller_id_number..",fax_uri="..fax_uri..",fax_retry_limit="..fax_retry_limit..",fax_retry_sleep="..fax_retry_sleep..",fax_verbose=true,fax_file='"..fax_file.."'";
 
 		if (fax_retry_attempts < fax_retry_limit) then 
 
@@ -537,4 +527,10 @@
 				email_message_success ,
 				fax_file
 			);
+
+		if (settings['fax']['keep_local']['boolean'] ~= "nil") then
+			if (settings['fax']['keep_local']['boolean'] == "false") then
+				os.remove(fax_file);
+			end
+		end
 	end
