@@ -44,10 +44,12 @@ require_once "resources/header.php";
 	$destination = new destinations;
 
 //load available presets
-	foreach ($_SESSION['time_conditions']['preset'] as $json) {
+	$preset_region = "preset_".$_SESSION['time_conditions']['region']['text'];
+	foreach ($_SESSION['time_conditions'][$preset_region] as $json) {
 		$available_presets[] = json_decode($json, true);
 	}
-
+	unset($preset_region);
+	
 //set the action as an add or an update
 	if (isset($_REQUEST["id"])) {
 		$action = "update";
@@ -858,7 +860,7 @@ function add_custom_condition($destination, $group_id, $dialplan_action = '') {
 	echo "			<td colspan='2' class='vtable'>".$text['label-group']."</td>\n";
 	echo "		</tr>";
 	echo "		<tr>";
-	echo "			<td colspan='2' style='padding-top: 3px;'>";
+	echo "			<td colspan='2' style='padding-top: 3px; padding-right: 3px; white-space: nowrap;'>";
 	//$destination = new destinations;
 	echo $destination->select('dialplan', 'dialplan_action['.$group_id.']', $dialplan_action);
 	echo "			</td>";

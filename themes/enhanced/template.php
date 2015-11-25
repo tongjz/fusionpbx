@@ -251,7 +251,7 @@ form {
 	margin: 0;
 	}
 
-input.btn, input.button {
+input.btn, input.button, button {
 	font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 	padding: 2px 6px 3px 6px;
 	color: #fff;
@@ -273,7 +273,7 @@ input.btn, input.button {
 	-moz-opacity: 0.9;
 	}
 
-input.btn:hover, input.button:hover, img.list_control_icon:hover {
+input.btn:hover, input.button:hover, img.list_control_icon:hover, button:hover {
 	box-shadow: 0 0 5px #cddaf0;
 	-webkit-box-shadow: 0 0 5px #cddaf0;
 	-moz-box-shadow: 0 0 5px #cddaf0;
@@ -1424,7 +1424,7 @@ if (strlen($_SESSION['message']) > 0) {
 
 	<?php
 	// check for background image
-	if (isset($_SESSION['theme']['background_image'])) {
+	if (isset($_SESSION['theme']['background_image_enabled']['boolean']) and $_SESSION['theme']['background_image_enabled']['boolean'] == 'true') {
 		// background image is enabled
 		$image_extensions = array('jpg','jpeg','png','gif');
 
