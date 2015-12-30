@@ -46,6 +46,10 @@
 	number_alias_string = "";
 	vm_mailto = "";
 
+-- event source 
+	local event_calling_function = params:getHeader("Event-Calling-Function")
+	local event_calling_file = params:getHeader("Event-Calling-File")
+
 --determine the correction action to perform
 	if (purpose == "gateways") then
 		dofile(scripts_dir.."/app/xml_handler/resources/scripts/directory/action/domains.lua");
@@ -55,8 +59,12 @@
 		dofile(scripts_dir.."/app/xml_handler/resources/scripts/directory/action/group_call.lua");
 	elseif (action == "reverse-auth-lookup") then
 		dofile(scripts_dir.."/app/xml_handler/resources/scripts/directory/action/reverse-auth-lookup.lua");
-	elseif (params:getHeader("Event-Calling-Function") == "switch_xml_locate_domain") then
+	elseif (event_calling_function == "switch_xml_locate_domain") then
 		dofile(scripts_dir.."/app/xml_handler/resources/scripts/directory/action/domains.lua");
+	elseif (event_calling_function == "switch_load_network_lists") then
+		dofile(scripts_dir.."/app/xml_handler/resources/scripts/directory/action/acl.lua");
+	elseif (event_calling_function == "populate_database") and (event_calling_file == "mod_directory.c") then
+		dofile(scripts_dir.."/app/xml_handler/resources/scripts/directory/action/directory.lua");
 	else
 		--handle action
 			--all other directory actions: sip_auth, user_call 
@@ -251,6 +259,9 @@
 								forward_busy_destination = row.forward_busy_destination;
 								forward_no_answer_enabled = row.forward_no_answer_enabled;
 								forward_no_answer_destination = row.forward_no_answer_destination;
+								forward_user_not_registered_enabled = row.forward_user_not_registered_enabled;
+								forward_user_not_registered_destination = row.forward_user_not_registered_destination;
+
 								do_not_disturb = row.do_not_disturb;
 
 							--set the dial_string
@@ -477,6 +488,13 @@
 							if (string.len(forward_no_answer_destination) > 0) then
 								table.insert(xml, [[								<variable name="forward_no_answer_destination" value="]] .. forward_no_answer_destination .. [["/>]]);
 							end
+							if (string.len(forward_user_not_registered_enabled) > 0) then
+								table.insert(xml, [[								<variable name="forward_user_not_registered_enabled" value="]] .. forward_user_not_registered_enabled .. [["/>]]);
+							end
+							if (string.len(forward_user_not_registered_destination) > 0) then
+								table.insert(xml, [[								<variable name="forward_user_not_registered_destination" value="]] .. forward_user_not_registered_destination .. [["/>]]);
+							end
+
 							if (string.len(do_not_disturb) > 0) then
 								table.insert(xml, [[								<variable name="do_not_disturb" value="]] .. do_not_disturb .. [["/>]]);
 							end
